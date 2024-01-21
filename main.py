@@ -35,8 +35,11 @@ def add(user_input):
     line = user_input.split(' ')
     name = line[1]
     number = line[2]
-    contacts[name] = number
-    return 'New contact added!'
+    if name not in contacts:
+        contacts[name] = number
+        return 'New contact added!'
+    else:
+        return 'Contact already exist'
 
 
 @input_error
@@ -44,8 +47,11 @@ def change(user_input):
     line = user_input.split(' ')
     name = line[1]
     number = line[2]
-    contacts[name] = number
-    return 'Contact updated!'
+    if name in contacts:
+        contacts[name] = number
+        return 'Contact updated!'
+    else:
+        raise KeyError
 
 
 @input_error
@@ -65,18 +71,19 @@ def show_all():
         return s
 
 
-def exit():
-    sys.exit()
+def exit(user_input):
+    if user_input.lower() in ['good bye', 'close', 'exit']:
+        sys.exit()
 
 
 def main():  
    while True:
-        user_input = input('>>')
-        line = user_input.split(' ')
-        if line[0].lower() in ['good', 'close', 'exit']:
+        user_input = input('>> ')
+        if user_input.lower() in ['good bye', 'close', 'exit']:
             print('Good bye!')
-            exit()
-        elif line[0].lower() == 'hello':
+            exit(user_input)
+        line = user_input.split(' ')
+        if line[0].lower() == 'hello':
             print(greeting())
         elif line[0].lower() == 'add':
             print(add(user_input))
@@ -84,7 +91,7 @@ def main():
             print(change(user_input))
         elif line[0].lower() == 'phone':
             print(phone(user_input))
-        elif line[0].lower() == 'show' and line[1].lower() == 'all':
+        elif line[0].lower() == 'show':
             print(show_all())
         else:
             print(f'Please follow the commands list:\n{help}')
