@@ -78,7 +78,7 @@ def exit(user_input):
 
 def main():  
    while True:
-        user_input = input('>> ')
+        user_input = input('>>')
         if user_input.lower() in ['good bye', 'close', 'exit']:
             print('Good bye!')
             exit(user_input)
@@ -91,7 +91,7 @@ def main():
             print(change(user_input))
         elif line[0].lower() == 'phone':
             print(phone(user_input))
-        elif line[0].lower() == 'show':
+        elif user_input.lower() == 'show all':
             print(show_all())
         else:
             print(f'Please follow the commands list:\n{help}')
